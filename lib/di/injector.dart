@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/di/builders.dart';
-import 'package:flutter_app/screens/app_container/app_container_item.dart';
 import 'package:flutter_app/screens/app_container/app_container_screen.dart';
 import 'package:flutter_app/screens/common/bloc_provider.dart';
 import 'package:flutter_app/screens/first/bloc/first_bloc.dart';
@@ -78,25 +77,12 @@ class Injection {
     injector.map<AppScreenBuilder>((i) => () {
           return AppContainerScreen(
             menu: i.get<MenuBuilder>()(),
-            content: _buildAppContainerItems(),
+            content: AppContainerContent(
+              firstTab: i.get<FirstScreenBuilder>()(),
+              secondTab: i.get<SecondScreenBuilder>()(),
+              thirdTab: i.get<ThirdScreenBuilder>()()
+            ),
           );
         });
-  }
-
-  static List<AppContainerItem> _buildAppContainerItems() {
-    return [
-      AppContainerItem(
-          screen: injector.get<FirstScreenBuilder>()(),
-          barItem: BottomNavigationBarItem(
-              icon: Icon(Icons.map), title: Text("First"))),
-      AppContainerItem(
-          screen: injector.get<SecondScreenBuilder>()(),
-          barItem: BottomNavigationBarItem(
-              icon: Icon(Icons.extension), title: Text("Second"))),
-      AppContainerItem(
-          screen: injector.get<ThirdScreenBuilder>()(),
-          barItem: BottomNavigationBarItem(
-              icon: Icon(Icons.accessibility), title: Text("Third"))),
-    ];
   }
 }

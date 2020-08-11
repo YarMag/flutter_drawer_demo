@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
-import './app_container_item.dart';
+
+class AppContainerContent {
+  final Widget firstTab;
+  final Widget secondTab;
+  final Widget thirdTab;
+
+  AppContainerContent(
+      {@required this.firstTab,
+      @required this.secondTab,
+      @required this.thirdTab});
+}
 
 class AppContainerScreen extends StatefulWidget {
   final Widget _menu;
-  final List<AppContainerItem> _content;
+  final AppContainerContent _content;
 
   AppContainerScreen(
-      {@required Widget menu, @required List<AppContainerItem> content})
+      {@required Widget menu, @required AppContainerContent content})
       : _menu = menu,
         _content = content;
 
@@ -16,13 +26,24 @@ class AppContainerScreen extends StatefulWidget {
 
 class _AppContainerScreenState extends State<AppContainerScreen> {
   int _selectedIndex = 0;
-  List<BottomNavigationBarItem> _bottomBarItems;
+  List<BottomNavigationBarItem> _bottomBarItems = [];
+  List<Widget> _tabWidgets = [];
 
   @override
   void initState() {
     super.initState();
 
-    _bottomBarItems = widget._content.map((item) => item.barItem).toList();
+    _tabWidgets.add(widget._content.firstTab);
+    _bottomBarItems.add(
+        BottomNavigationBarItem(icon: Icon(Icons.map), title: Text("First")));
+
+    _tabWidgets.add(widget._content.secondTab);
+    _bottomBarItems.add(BottomNavigationBarItem(
+        icon: Icon(Icons.extension), title: Text("Second")));
+
+    _tabWidgets.add(widget._content.thirdTab);
+    _bottomBarItems.add(BottomNavigationBarItem(
+        icon: Icon(Icons.accessibility), title: Text("Third")));
   }
 
   @override
@@ -33,7 +54,7 @@ class _AppContainerScreenState extends State<AppContainerScreen> {
         title: Text("My Drawer App"),
       ),
       body: SafeArea(
-        child: widget._content[_selectedIndex].screen,
+        child: _tabWidgets[_selectedIndex],
       ),
       drawer: Drawer(
         child: widget._menu,
