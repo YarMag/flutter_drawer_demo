@@ -1,10 +1,13 @@
-
 import 'package:flutter_app/screens/menu/bloc/menu_bloc_interface.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MenuBloc extends IMenuBloc {
+  final BehaviorSubject<String> _userNameSubject =
+      BehaviorSubject<String>.seeded("User");
 
-  final BehaviorSubject<String> _userNameSubject = BehaviorSubject<String>.seeded("User");
+  Sink<String> get _inUserName => _userNameSubject.sink;
+  @override
+  Stream<String> get outUserName => _userNameSubject.stream;
 
   void shutdown() {
     _userNameSubject.close();
@@ -22,12 +25,7 @@ class MenuBloc extends IMenuBloc {
 
   @override
   void dispose() {
-    // this method is intentionally left empty
+    // this method was intentionally left empty
     // we don't want to close/recreate subscriptions each time menu is shown
   }
-
-  Sink<String> get _inUserName => _userNameSubject.sink;
-  @override
-  Stream<String> get outUserName => _userNameSubject.stream;
-
 }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screens/common/bloc_provider.dart';
 import 'package:flutter_app/screens/menu/bloc/menu_bloc_interface.dart';

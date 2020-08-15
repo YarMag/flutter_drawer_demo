@@ -83,10 +83,7 @@ class Injection {
           return AppContainerScreen(
             menu: menu,
             content: AppContainerContent(
-              firstTab: firstTab,
-              secondTab: secondTab,
-              thirdTab: thirdTab
-            ),
+                firstTab: firstTab, secondTab: secondTab, thirdTab: thirdTab),
           );
         });
   }
