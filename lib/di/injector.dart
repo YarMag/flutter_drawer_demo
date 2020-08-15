@@ -75,12 +75,17 @@ class Injection {
         });
 
     injector.map<AppScreenBuilder>((i) => () {
+          Widget firstTab = i.get<FirstScreenBuilder>()();
+          Widget secondTab = i.get<SecondScreenBuilder>()();
+          Widget thirdTab = i.get<ThirdScreenBuilder>()();
+          Widget menu = i.get<MenuBuilder>()();
+
           return AppContainerScreen(
-            menu: i.get<MenuBuilder>()(),
+            menu: menu,
             content: AppContainerContent(
-              firstTab: i.get<FirstScreenBuilder>()(),
-              secondTab: i.get<SecondScreenBuilder>()(),
-              thirdTab: i.get<ThirdScreenBuilder>()()
+              firstTab: firstTab,
+              secondTab: secondTab,
+              thirdTab: thirdTab
             ),
           );
         });

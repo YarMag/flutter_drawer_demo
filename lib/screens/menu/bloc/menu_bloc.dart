@@ -6,6 +6,10 @@ class MenuBloc extends IMenuBloc {
 
   final BehaviorSubject<String> _userNameSubject = BehaviorSubject<String>.seeded("User");
 
+  void shutdown() {
+    _userNameSubject.close();
+  }
+
   @override
   void onFirstOptionTap() {
     print("First option tap!");
@@ -18,7 +22,8 @@ class MenuBloc extends IMenuBloc {
 
   @override
   void dispose() {
-    _userNameSubject.close();
+    // this method is intentionally left empty
+    // we don't want to close/recreate subscriptions each time menu is shown
   }
 
   Sink<String> get _inUserName => _userNameSubject.sink;
